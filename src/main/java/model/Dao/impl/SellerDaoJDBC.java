@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,30 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public void insert(Seller obj) {
+        PreparedStatement pst = null;
+        try {
+            pst = conn.prepareStatement("INSERT INTO seller (Name, Email, BirthDate,BaseSalary,DepartmentId) VALUES (?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+            pst.setString(1, obj.getName());
+            pst.setString(2, obj.getEmail());
+            pst.setDate(3, new java.sql.Date(obj.getBirthDate().getTime()));
+            pst.setDouble(4, obj.getBaseSalary());
+            pst.setInt(5,obj.getDepartaement().getId());
+            int row = pst.executeUpdate();
+            if (row > 0){
+                ResultSet rs = pst.getGeneratedKeys();
+                if(rs.next()){
+                    int id = rs.getInt(1);
+                    obj.setId(id);
+                }
+                    
+            }
+            else{
+                throw new db.DbExeption("Erro Inesperada, nenhuma linha afertada");
+            }
+        } catch (SQLException e) {
+            throw new db.DbExeption(e.getMessage());
+        } finally {
+        }
     }
 
     @Override

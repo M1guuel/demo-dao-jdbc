@@ -33,6 +33,12 @@ public class DemoDaoJdbc {
         for (Seller obj : list) {
             System.out.println(obj);
         }
+           System.out.println("\n === TEST 4: seller Insert =======");
+        Seller newSeller = new Seller( null,"miguel","exemp@gmail.com", new Date(), 4000.0, new Departament(2, null));
+        seller.insert(newSeller);
+        System.out.println(   "NOVO ID: " + newSeller.getId());
+        }
+
 
     }
-}
+
