@@ -1,10 +1,11 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package application;
 
 import java.util.Date;
+import model.Dao.DaoFactory;
+import model.Dao.SellerDao;
 import model.entities.Departament;
 import model.entities.Seller;
 
@@ -15,10 +16,9 @@ import model.entities.Seller;
 public class DemoDaoJdbc {
 
     public static void main(String[] args) {
-       Seller seller = new Seller(1,"Miguel","Exempl@gmail.com", new Date() , 4000.0, new Departament(1, "Adm"));
-        
-        System.out.println(seller);
-        
-        
+        SellerDao seller = DaoFactory.createSellerDao();
+        Seller s = seller.fidById(3);
+        System.out.println(s);
+
     }
 }
