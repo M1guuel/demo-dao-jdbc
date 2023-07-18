@@ -37,8 +37,14 @@ public class DemoDaoJdbc {
         Seller newSeller = new Seller( null,"miguel","exemp@gmail.com", new Date(), 4000.0, new Departament(2, null));
         seller.insert(newSeller);
         System.out.println(   "NOVO ID: " + newSeller.getId());
+        
+     System.out.println("\n === TEST 5: seller Insert =======");
+        Seller a = seller.fidById(1);
+        a.setName("EDSON ");
+        seller.update(a);
+        System.out.println( " UPDATE COMPLETO ");
         }
 
-
-    }
+}
+    
 
