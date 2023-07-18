@@ -21,14 +21,18 @@ public class DemoDaoJdbc {
         System.out.println("=== TEST 1: seller findById");
         Seller s = seller.fidById(3);
         System.out.println(s);
-        
-         System.out.println("\n === TEST 2: seller findByDepartment");
-         Departament dp = new Departament(2,null);
-         List<Seller> list = seller.findByDepartment(dp);
-         for (Seller obj : list){
-             System.out.println(obj);
-         }
-         
+
+        System.out.println("\n === TEST 2: seller findByDepartment");
+        Departament dp = new Departament(2, null);
+        List<Seller> list = seller.findByDepartment(dp);
+        for (Seller obj : list) {
+            System.out.println(obj);
+        }
+        System.out.println("\n === TEST 3: seller findByDepartment");
+        list = seller.findAll();
+        for (Seller obj : list) {
+            System.out.println(obj);
+        }
 
     }
 }

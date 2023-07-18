@@ -68,7 +68,34 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public List<Seller> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            pst = conn.prepareStatement("SELECT seller.*, department.name AS DName \n"
+                    + "FROM seller INNER JOIN Department\n"
+                    + "ON seller.DepartmentId = department.Id order by name");
+            rs = pst.executeQuery();
+            
+            List<Seller> list = new ArrayList<>();
+            Map<Integer,Departament> map = new HashMap<>();
+            
+            while(rs.next()) {
+                Departament dep = map.get(rs.getInt("DepartmentId"));
+                
+                if(dep == null){
+                    dep = instantiateDepartment(rs);
+                    map.put(rs.getInt("DepartmentId" ), dep);
+                }
+                
+                Seller obj = instantiateSeller(rs, dep);
+                list.add(obj);
+            }
+            return list;
+            
+        } catch (SQLException e) {
+            throw new db.DbExeption(e.getMessage());
+        } finally {
+        }
     }
 
     private Departament instantiateDepartment(ResultSet rs) throws SQLException {
@@ -121,7 +148,6 @@ public class SellerDaoJDBC implements SellerDao {
         } catch (SQLException e) {
             throw new db.DbExeption(e.getMessage());
         } finally {
-            db.Conexao.closeConnection(conn, pst, rs);
         }
     }
 
