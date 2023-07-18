@@ -17,6 +17,7 @@ public class DemoDaoJdbc {
 
     public static void main(String[] args) {
         SellerDao seller = DaoFactory.createSellerDao();
+        System.out.println("=== TEST 1: seller findById");
         Seller s = seller.fidById(3);
         System.out.println(s);
 
